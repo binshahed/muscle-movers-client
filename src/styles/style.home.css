@@ -1,0 +1,65 @@
+
+
+.banner-container {
+  background-image: url("../assets/top-banner.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 90vh;
+  display: flex;
+  justify-content: center;
+  align-items: center; /* Center vertically */
+  background-color: var(--secondary);
+  overflow: hidden; /* Ensure content stays within the container */
+}
+
+.banner-container .banner-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; /* Center horizontally */
+  animation: fadeIn 2s ease-out; /* Apply the animation */
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.banner-container h1 {
+  font-family: "Londrina Outline", sans-serif;
+  font-size: 40px;
+  color: #fff;
+  text-transform: uppercase;
+}
+
+.banner-container p {
+  color: var(--primary);
+  font-size: 20px;
+  text-transform: uppercase;
+}
+
+.banner-container button {
+  padding: 20px;
+  margin-top: 20px;
+  font-weight: bold;
+}
+.banner-container .ant-card-meta-title{
+    font-size: 50px !important;
+}
+
+.fixed-image {
+  width: 240px; /* Set the desired width */
+  height: 240px; /* Set the desired height */
+  object-fit: cover; /* Ensure the image covers the area */
+}
+
+.slider-container {
+  margin: 50px 0;
+}

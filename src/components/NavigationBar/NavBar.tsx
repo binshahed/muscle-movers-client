@@ -1,45 +1,54 @@
 import { useState } from "react";
-import { Badge, Button, Avatar, Space } from "antd";
+import { Badge, Avatar, Space } from "antd";
 import {
   CloseOutlined,
   MenuUnfoldOutlined,
-  ShoppingCartOutlined
+  ShoppingCartOutlined,
+  UserOutlined
 } from "@ant-design/icons";
 import "../../styles/navbar.css";
+import { Link, NavLink } from "react-router-dom";
+
+import logo from "../../assets/logo-black.png";
 
 const menuItems = [
   {
     title: "Home",
-    url: "#",
+    url: "/",
     cName: "nav-links"
   },
   {
     title: "Services",
-    url: "#",
+    url: "/service",
     cName: "nav-links"
   },
   {
     title: "Products",
-    url: "#",
+    url: "/products",
     cName: "nav-links"
   },
   {
     title: "Contact",
-    url: "#",
+    url: "/contact",
     cName: "nav-links"
   }
 ];
 
 const Header = () => {
   return (
-    <Space size={30}>
+    <Space size={20}>
       <Badge count={1}>
         <Avatar
           shape="square"
           icon={<ShoppingCartOutlined style={{ fontSize: "30px" }} />}
         />
       </Badge>
-      <Button type="primary">SIGN UP</Button>
+      <Link to="/login">
+        <Avatar
+          shape="square"
+          icon={<UserOutlined style={{ fontSize: "30px" }} />}
+        />
+      </Link>
     </Space>
   );
 };
@@ -53,9 +62,12 @@ const NavBar = () => {
 
   return (
     <nav className="navbar">
-      <h1 className="navbar-logo">
+      <Link to="/" className="navbar-logo-link">
+        <img style={{ width: "100px" }} src={logo} alt="logo" />
+      </Link>
+      {/* <h1 className="navbar-logo">
         React <i className="fab fa-react"></i>
-      </h1>
+      </h1> */}
       <div className="menu-icon" onClick={handleClick}>
         {active ? (
           <CloseOutlined style={{ color: "#fff" }} />
@@ -66,9 +78,9 @@ const NavBar = () => {
       <ul className={active ? "nav-menu active" : "nav-menu"}>
         {menuItems.map((item, index) => (
           <li key={index}>
-            <a href={item.url} className={item.cName}>
+            <NavLink to={item.url} className={item.cName}>
               {item.title}
-            </a>
+            </NavLink>
           </li>
         ))}
         <li className="nav-links-mobile">

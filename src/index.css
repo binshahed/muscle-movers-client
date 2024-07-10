@@ -1,3 +1,6 @@
+@import url("https://fonts.googleapis.com/css2?family=Londrina+Outline&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+
 * {
   margin: 0;
   padding: 0;
@@ -10,11 +13,22 @@
   --secondary: #323231;
 }
 
+a:-webkit-any-link {
+  text-decoration: none !important;
+}
+
+
 .container {
   padding-right: 15px;
   padding-left: 15px;
   margin-right: auto;
   margin-left: auto;
+}
+.active {
+  background-color: var(--primary);
+  border-radius: 10px;
+  
+  color: white;
 }
 @media (min-width: 768px) {
   .container {
