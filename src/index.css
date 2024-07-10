@@ -1,5 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Londrina+Outline&display=swap");
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap");
 
 * {
   margin: 0;
@@ -17,7 +17,6 @@ a:-webkit-any-link {
   text-decoration: none !important;
 }
 
-
 .container {
   padding-right: 15px;
   padding-left: 15px;
@@ -27,9 +26,42 @@ a:-webkit-any-link {
 .active {
   background-color: var(--primary);
   border-radius: 10px;
-  
+
   color: white;
 }
+
+footer {
+  background-color: var(--secondary);
+  color: white;
+  /* text-align: center; */
+  padding: 5rem 0;
+  margin-top: 4rem;
+}
+
+footer .footer-link  {
+  font-size: 0.8rem;
+  font-weight: 500;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  color: white !important;
+  margin-bottom: 20px;
+
+}
+
+footer .footer-link  a{
+  color: white !important;
+}
+footer .footer-link  a:hover{
+  color: rgb(168, 168, 168) !important;
+}
+
+footer .footer-heading {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+}
+
 @media (min-width: 768px) {
   .container {
     width: 750px;

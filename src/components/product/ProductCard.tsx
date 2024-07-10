@@ -7,7 +7,7 @@ const ProductCard = ({ product }: { product: TProduct }) => {
   return (
     <Card
       hoverable
-      style={{ width: 240 }}
+      style={{ width: "100%" }}
       cover={<img alt="example" src={product.photoUrl} />}
     >
       <div>
@@ -19,6 +19,7 @@ const ProductCard = ({ product }: { product: TProduct }) => {
           </span>
           {product.discountPercentage > 0 && (
             <span>
+              <br />
               <span className="discount-price">${product.price} </span>
               <span className="discount-percentage">
                 <Badge
