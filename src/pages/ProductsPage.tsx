@@ -60,7 +60,6 @@ const ProductsPage = () => {
             query={query}
             setQuery={setQuery}
             setSearchTerm={setSearchTerm}
-            searchTerm={searchTerm}
           />
           {isLoadingProducts ? (
             <LoadingSkeleton />

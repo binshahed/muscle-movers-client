@@ -1,24 +1,10 @@
+import { TCartItem, CartState } from "../types/types.cart";
 import { TProduct } from "../types/types.products";
 import { discountCalculator } from "./discountCalculator";
 
-interface CartItem {
-  _id: string;
-  price: number;
-  discountPercentage: number;
-  quantity: number;
-  productPrice: number;
-}
-
-interface CartState {
-  items: CartItem[];
-  user?: string;
-  token?: string;
-  totalPrice: number;
-}
-
 export const totalPricePerProduct = (
-  cartProduct: CartItem,
-  action: { payload: CartItem }
+  cartProduct: TCartItem,
+  action: { payload: TCartItem }
 ): number =>
   parseFloat(
     (
@@ -45,7 +31,7 @@ export const cartItems: CartState = JSON.parse(
   localStorage.getItem("cart") || '{"items": []}'
 );
 
-export const convertProductToCartItem = (product: TProduct): CartItem => ({
+export const convertProductToCartItem = (product: TProduct): TCartItem => ({
   ...product,
   _id: product._id || "",
   price: product.price,

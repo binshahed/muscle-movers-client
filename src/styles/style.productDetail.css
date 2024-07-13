@@ -1,0 +1,22 @@
+.product-name{
+    margin: 20px 0;
+    font-size: 25px ;
+    font-weight: bold;
+}
+
+.price{
+    font-weight: bold;
+    font-size: 25px;
+    margin-bottom: 10px;
+    color: var(--primary);
+}
+.main-price{
+    color: var(--secondary) !important;
+    margin-left: 15px;
+    text-decoration: line-through;
+ 
+}
+.product-desc{
+    font-weight: 400;
+    margin-bottom: 30px;
+}

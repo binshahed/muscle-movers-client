@@ -14,7 +14,6 @@ type TPropsValid = {
   query: string;
   setQuery: (value: string) => void;
   setSearchTerm: (value: string) => void;
-  searchTerm: string;
 };
 const FilterProducts = ({
   prices,
@@ -23,8 +22,7 @@ const FilterProducts = ({
   selectedCategories,
   query,
   setQuery,
-  setSearchTerm,
-  searchTerm
+  setSearchTerm
 }: TPropsValid) => {
   // fetch categories
   const { data: categories, isLoading } = useGetCategoriesQuery(undefined);
@@ -84,7 +82,6 @@ const FilterProducts = ({
           <p style={{ marginBottom: "10px", fontWeight: "bold" }}>Search</p>
           <Search
             allowClear
-            value={searchTerm}
             onChange={handleSearchChange}
             size="large"
             placeholder="input search text"

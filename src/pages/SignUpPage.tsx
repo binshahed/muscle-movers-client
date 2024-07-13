@@ -5,7 +5,7 @@ import {
   PhoneOutlined,
   UserOutlined
 } from "@ant-design/icons";
-import { Button, Form, FormProps, Input } from "antd";
+import { Button, Form, FormProps, Input, message } from "antd";
 import "../styles/style.auth.css";
 import { Link, useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../store/hooks";
@@ -13,7 +13,7 @@ import { useSignUpMutation } from "../store/features/auth/authApi";
 import { TUserSignUp } from "../types/types.auth";
 import { setUser, TUserData } from "../store/features/auth/authSlice";
 import { verifyToken } from "../utils/verifyToken";
-import { toast } from "sonner";
+
 import { APIError } from "../types/ApiError";
 
 const SignUpPage = () => {
@@ -32,13 +32,13 @@ const SignUpPage = () => {
           token: res.data.token
         })
       );
-      toast.success("Login successful");
+      message.success("Login successful");
       navigate(`/`);
     } catch (err) {
       console.log(err);
 
       const apiError = err as APIError;
-      toast.error(apiError?.data?.message);
+      message.error(apiError?.data?.message);
     }
   };
 

@@ -1,13 +1,12 @@
 import { LockOutlined, MailOutlined } from "@ant-design/icons";
-import { Button, Form, FormProps, Input } from "antd";
+import { Button, Form, FormProps, Input, message } from "antd";
 import "../styles/style.auth.css";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../store/hooks";
 
 import { TUserSignUp } from "../types/types.auth";
 import { setUser, TUserData } from "../store/features/auth/authSlice";
 import { verifyToken } from "../utils/verifyToken";
-import { toast } from "sonner";
 import { useLoginMutation } from "../store/features/auth/authApi";
 import { APIError } from "../types/ApiError";
 
@@ -15,6 +14,9 @@ const LoginPage = () => {
   const [login, { isLoading }] = useLoginMutation();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+
+  const { state } = useLocation();
+  console.log(state);
 
   const onFinish: FormProps<TUserSignUp>["onFinish"] = async (values) => {
     try {
@@ -27,12 +29,12 @@ const LoginPage = () => {
           token: res.token
         })
       );
-      toast.success("Login successful");
-      navigate(`/`);
+      message.success("Login successful");
+      navigate(state?.from || "/");
     } catch (err) {
       const apiError = err as APIError;
       console.log("Sign up error:", err);
-      toast.error(apiError?.data?.message);
+      message.error(apiError?.data?.message);
     }
   };
 

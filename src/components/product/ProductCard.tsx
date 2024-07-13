@@ -5,6 +5,7 @@ import "../../styles/style.productCard.css";
 import { addToCart } from "../../store/features/cart/cartSlice";
 import { useAppDispatch } from "../../store/hooks";
 import { convertProductToCartItem } from "../../utils/cartCommonFunc";
+import { Link } from "react-router-dom";
 
 const ProductCard = ({ product }: { product: TProduct }) => {
   const dispatch = useAppDispatch();
@@ -16,11 +17,16 @@ const ProductCard = ({ product }: { product: TProduct }) => {
   return (
     <Card
       hoverable
-      style={{ width: "100%" }}
+      style={{ width: "100%", height: "100%" }}
       cover={<img alt="example" src={product.photoUrl} />}
     >
       <div>
-        <p className="product-name">{product.name}</p>
+        <Link
+          to={`/products/${product._id}`}
+          style={{ color: "var(-secondary)" }}
+        >
+          <p className="product-name">{product.name}</p>
+        </Link>
         {/* <p>{product.description}</p> */}
         <p className="price">
           <span className="main-price">
@@ -40,9 +46,15 @@ const ProductCard = ({ product }: { product: TProduct }) => {
             </span>
           )}
         </p>
-        <Button size="large" onClick={handleAddCart}>
-          Add To Cart
-        </Button>
+        {product.stockQuantity === 0 ? (
+          <Button size="large" disabled>
+            Out of stock
+          </Button>
+        ) : (
+          <Button size="large" onClick={handleAddCart}>
+            Add To Cart
+          </Button>
+        )}
       </div>
     </Card>
   );

@@ -6,8 +6,11 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
     <ConfigProvider
       theme={{
         token: {
+          colorBgBase: "#fff",
           colorPrimary: "#F36B21",
-          colorText: "#323231"
+          colorText: "#323231",
+          colorLink: "#323231",
+          colorLinkHover: "#F36B21"
         }
       }}
     >

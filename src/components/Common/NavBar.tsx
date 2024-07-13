@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Badge, Avatar, Space } from "antd";
+import { Badge, Avatar, Space, Button } from "antd";
 import {
   CloseOutlined,
   MenuUnfoldOutlined,
@@ -11,6 +11,12 @@ import { Link, NavLink } from "react-router-dom";
 
 import logo from "../../assets/logo-black.png";
 import { useAppSelector } from "../../store/hooks";
+import {
+  logout,
+  useCurrentToken,
+  useCurrentUser
+} from "../../store/features/auth/authSlice";
+import { useDispatch } from "react-redux";
 
 const menuItems = [
   {
@@ -19,8 +25,8 @@ const menuItems = [
     cName: "nav-links"
   },
   {
-    title: "Services",
-    url: "/service",
+    title: "About Us",
+    url: "/about-us",
     cName: "nav-links"
   },
   {
@@ -29,14 +35,22 @@ const menuItems = [
     cName: "nav-links"
   },
   {
-    title: "Contact",
-    url: "/contact",
+    title: "Product Management",
+    url: "/product-management",
     cName: "nav-links"
   }
 ];
 
 const Header = () => {
   const cart = useAppSelector((state) => state.cart);
+  const token = useAppSelector(useCurrentToken);
+  const user = useAppSelector(useCurrentUser);
+  const dispatch = useDispatch();
+
+  const handleLogout = () => {
+    dispatch(logout());
+  };
+
   return (
     <Space size={20}>
       {cart.items.length > 0 ? (
@@ -58,12 +72,22 @@ const Header = () => {
           </Badge>
         </Link>
       )}
-      <Link to="/login">
-        <Avatar
-          shape="square"
-          icon={<UserOutlined style={{ fontSize: "30px" }} />}
-        />
-      </Link>
+      {token && user ? (
+        <div className="user-info" style={{ color: "#fff" }}>
+          <Avatar size={40} icon={<UserOutlined />} />
+          <span style={{ margin: "0 10px" }}>{user?.name}</span>
+          <Button onClick={handleLogout} style={{ margin: "0 15px" }}>
+            Logout
+          </Button>
+        </div>
+      ) : (
+        <Link to="/login">
+          <Avatar
+            shape="square"
+            icon={<UserOutlined style={{ fontSize: "30px" }} />}
+          />
+        </Link>
+      )}
     </Space>
   );
 };

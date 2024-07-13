@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { message } from "antd";
 
 import {
   cartTotalPrice,
@@ -7,22 +8,9 @@ import {
   cartItems
 } from "../../../utils/cartCommonFunc";
 import { discountCalculator } from "../../../utils/discountCalculator";
+import { TCartItem, CartState } from "../../../types/types.cart";
 
 // Define types for cart items and state
-interface CartItem {
-  _id: string;
-  price: number;
-  discountPercentage: number;
-  quantity: number;
-  productPrice: number;
-}
-
-interface CartState {
-  items: CartItem[];
-  user?: string;
-  token?: string;
-  totalPrice: number;
-}
 
 // initial state
 const initialState: CartState = {
@@ -36,34 +24,48 @@ const cartSlice = createSlice({
   name: "cart",
   initialState,
   reducers: {
-    addToCart: (state: CartState, action: PayloadAction<CartItem>) => {
+    addToCart: (state: CartState, action: PayloadAction<TCartItem>) => {
       const cartProduct = state.items.find(
         (product) => product?._id === action.payload?._id
       );
-      // if product not exist
 
+      console.log("pd quantity", action.payload.stockQuantity);
+      console.log("cart quantity", cartProduct?.quantity);
+
+      // if product not exist
       if (!cartProduct) {
-        const cartPd: CartItem = {
-          ...action.payload,
-          quantity: 1,
-          productPrice: discountCalculator(
-            action.payload.price,
-            action.payload.discountPercentage
-          )
-        };
-        state.items.push(cartPd);
-        state.totalPrice = cartTotalPrice(state);
-        setLocalStorage(state);
+        if (action.payload.stockQuantity > 0) {
+          const cartPd: TCartItem = {
+            ...action.payload,
+            quantity: 1,
+            productPrice: discountCalculator(
+              action.payload.price,
+              action.payload.discountPercentage
+            )
+          };
+
+          state.items.push(cartPd);
+          state.totalPrice = cartTotalPrice(state);
+          setLocalStorage(state);
+          message.success("Product added to cart.");
+        } else {
+          message.error("Product is not available.");
+        }
       } else {
-        // if product exists
-        cartProduct.quantity++;
-        cartProduct.productPrice = totalPricePerProduct(cartProduct, action);
-        state.totalPrice = cartTotalPrice(state);
-        setLocalStorage(state);
+        // if product exists and stock is available
+        if (cartProduct.quantity < action.payload.stockQuantity) {
+          cartProduct.quantity++;
+          cartProduct.productPrice = totalPricePerProduct(cartProduct, action);
+          state.totalPrice = cartTotalPrice(state);
+          setLocalStorage(state);
+          message.success("Product quantity updated in cart.");
+        } else {
+          message.error("Insufficient stock for this product.");
+        }
       }
     },
 
-    removeFromCart: (state: CartState, action: PayloadAction<CartItem>) => {
+    removeFromCart: (state: CartState, action: PayloadAction<TCartItem>) => {
       const cartProduct = state.items.find(
         (product) => product?._id === action.payload?._id
       );
@@ -90,10 +92,15 @@ const cartSlice = createSlice({
       );
       setLocalStorage(state);
       state.totalPrice = cartTotalPrice(state);
+    },
+    clearCart: (state: CartState) => {
+      state.items = [];
+      state.totalPrice = 0;
+      setLocalStorage(state);
     }
   }
 });
 
-export const { addToCart, removeFromCart, deleteItemFromCart } =
+export const { addToCart, removeFromCart, deleteItemFromCart, clearCart } =
   cartSlice.actions;
 export default cartSlice.reducer;
