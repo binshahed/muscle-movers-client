@@ -10,7 +10,7 @@ export const baseApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: config.BASE_URL,
     credentials: "include",
-    prepareHeaders: async (headers, { endpoint, getState }) => {
+    prepareHeaders: async (headers, { getState }) => {
       // headers.set("Content-Type", "application/json");
       const token = (getState() as RootState).auth.token;
       if (token) {
@@ -19,5 +19,5 @@ export const baseApi = createApi({
       return headers;
     }
   }),
-  endpoints: (builder) => ({})
+  endpoints: () => ({})
 });

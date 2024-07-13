@@ -78,7 +78,7 @@ const ProductsPage = () => {
           ) : (
             <Row gutter={[20, 20]}>
               {products?.data?.products.map((product: any) => (
-                <Col span={6} key={product._id}>
+                <Col span={24} lg={6} md={6} key={product._id}>
                   <ProductCard product={product} />
                 </Col>
               ))}

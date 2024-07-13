@@ -18,7 +18,7 @@ const CrateProductModal = ({
   return (
     <Modal
       centered
-      title="Basic Modal"
+      title="Create Product"
       open={isModalOpen}
       onOk={handleOk}
       onCancel={handleCancel}

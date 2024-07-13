@@ -78,7 +78,7 @@ const FilterProducts = ({
     <div style={{ marginBottom: "30px" }}>
       <h2 className="product-heading">Fitness Products</h2>
       <Row gutter={20}>
-        <Col span={6}>
+        <Col span={12} md={6} lg={6}>
           <p style={{ marginBottom: "10px", fontWeight: "bold" }}>Search</p>
           <Search
             allowClear
@@ -89,7 +89,7 @@ const FilterProducts = ({
             // style={{ width: 100 }}
           />
         </Col>
-        <Col span={6}>
+        <Col span={12} md={6} lg={6}>
           <p style={{ marginBottom: "10px", fontWeight: "bold" }}>
             Filter by Category
           </p>
@@ -106,7 +106,7 @@ const FilterProducts = ({
             defaultValue={selectedCategories}
           />
         </Col>
-        <Col span={6}>
+        <Col span={12} md={6} lg={6}>
           <p style={{ marginBottom: "20px", fontWeight: "bold" }}>
             Filter by Price
           </p>
@@ -118,7 +118,7 @@ const FilterProducts = ({
             onChangeComplete={onChangePriceRangeComplete}
           />
         </Col>
-        <Col span={4}>
+        <Col span={12} md={4} lg={4}>
           <p style={{ marginBottom: "10px", fontWeight: "bold" }}>
             Sort by Price
           </p>
@@ -134,7 +134,7 @@ const FilterProducts = ({
             ]}
           />
         </Col>
-        <Col span={2}>
+        <Col span={12} md={2} lg={2}>
           <Button
             onClick={handleClear}
             size="large"

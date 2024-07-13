@@ -2,21 +2,20 @@ import "../styles/style.home.css";
 import CategorySection from "../components/Home/CategorySection";
 import BannerSection from "../components/Home/BannerSection";
 import BestSellingSection from "../components/Home/BestSellingSection";
-import { useGetAllProductsMutation } from "../store/features/products/productApi";
+import { useGetProductsQuery } from "../store/features/products/productApi";
 import BenefitsSection from "../components/Home/BenefitsSection";
 import ImageGallery from "../components/Home/ImageGallery";
-import { useEffect } from "react";
+
 import LoadingSkeleton from "../components/Common/LoadingSkeleton";
+import { APIError } from "../types/ApiError";
 
 const HomePage = () => {
-  const [getAllProducts, { data: products, isLoading }] =
-    useGetAllProductsMutation(undefined);
-
-  useEffect(() => {
-    getAllProducts({ query: {}, data: {} });
-  }, []);
-
-  console.log(products);
+  const {
+    data: products,
+    isLoading,
+    isError,
+    error
+  } = useGetProductsQuery(undefined);
 
   return (
     <div>
@@ -24,8 +23,10 @@ const HomePage = () => {
       <CategorySection />
       {isLoading ? (
         <LoadingSkeleton />
+      ) : isError ? (
+        <p>{(error as APIError)?.data?.message}</p>
       ) : (
-        <BestSellingSection products={products?.data?.products} />
+        <BestSellingSection products={products?.data} />
       )}
       <BenefitsSection />
       <ImageGallery />

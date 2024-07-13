@@ -3,7 +3,8 @@ import { Button, Form, Input, InputNumber, message, Select } from "antd";
 
 import { useGetCategoriesQuery } from "../../store/features/category/categoryApi";
 import { useGetBrandQuery } from "../../store/features/brand/brandAPi";
-import { useCreateProductMutation } from "../../store/features/products/productApi";
+import { useUpdateProductMutation } from "../../store/features/products/productApi";
+import { useState } from "react";
 
 const layout = {
   labelCol: { span: 8 },
@@ -20,21 +21,33 @@ const validateMessages = {
   }
 };
 
-const ProductForm = ({
-  setIsModalOpen
+const ProductEditForm = ({
+  setIsModalOpen,
+  data
 }: {
   setIsModalOpen: (value: boolean) => void;
+  data: any;
 }) => {
-  const [createProduct, { isLoading }] = useCreateProductMutation();
+  const [updateProduct, { isLoading }] = useUpdateProductMutation();
+  const [categoryOptions, setCategoryOptions] = useState<any[]>(
+    data?.category?._id
+  );
+  const [brandOptions, setBrandOptions] = useState<any[]>(data?.brand?._id);
   const { data: categories } = useGetCategoriesQuery(undefined);
   const { data: brands } = useGetBrandQuery(undefined);
 
   const onFinish = async (values: any) => {
     try {
-      await createProduct(values).unwrap();
-      message.success("Product created successfully");
+      await updateProduct({
+        _id: data._id,
+        ...values,
+        category: categoryOptions,
+        brand: brandOptions
+      }).unwrap();
+      message.success("Product update successfully");
+      setIsModalOpen(false);
     } catch (error) {
-      message.error("Failed to create product");
+      message.error("Failed to Update product");
     }
   };
 
@@ -46,13 +59,19 @@ const ProductForm = ({
       style={{ maxWidth: 600 }}
       validateMessages={validateMessages}
     >
-      <Form.Item name="name" label="Name" rules={[{ required: true }]}>
+      <Form.Item
+        name="name"
+        label="Name"
+        rules={[{ required: true }]}
+        initialValue={data?.name}
+      >
         <Input />
       </Form.Item>
       <Form.Item
         name="description"
         label="Description"
         rules={[{ required: true }]}
+        initialValue={data.description}
       >
         <Input.TextArea />
       </Form.Item>
@@ -60,6 +79,7 @@ const ProductForm = ({
         name="price"
         label="Price"
         rules={[{ required: true, type: "number", min: 0 }]}
+        initialValue={data.price}
       >
         <InputNumber style={{ width: "100%" }} />
       </Form.Item>
@@ -67,6 +87,7 @@ const ProductForm = ({
         name="discountPercentage"
         label="Discount Percentage"
         rules={[{ type: "number", min: 0, max: 99 }]}
+        initialValue={data.discountPercentage}
       >
         <InputNumber style={{ width: "100%" }} />
       </Form.Item>
@@ -74,11 +95,20 @@ const ProductForm = ({
         name="stockQuantity"
         label="Stock Quantity"
         rules={[{ required: true, type: "number", min: 0 }]}
+        initialValue={data.stockQuantity}
       >
         <InputNumber style={{ width: "100%" }} />
       </Form.Item>
-      <Form.Item name="category" label="Category" rules={[{ required: true }]}>
-        <Select placeholder="Select a category">
+      <Form.Item
+        name="category"
+        label="Category"
+        rules={[{ required: true }]}
+        initialValue={data.category.name}
+      >
+        <Select
+          placeholder="Select a category"
+          onChange={(value) => setCategoryOptions(value)}
+        >
           {categories?.data?.map((category: any) => (
             <Select.Option key={category._id} value={category._id}>
               {category.name}
@@ -86,8 +116,16 @@ const ProductForm = ({
           ))}
         </Select>
       </Form.Item>
-      <Form.Item name="brand" label="Brand" rules={[{ required: true }]}>
-        <Select placeholder="Select a brand">
+      <Form.Item
+        name="brand"
+        label="Brand"
+        rules={[{ required: true }]}
+        initialValue={data.brand.name}
+      >
+        <Select
+          placeholder="Select a brand"
+          onChange={(value) => setBrandOptions(value)}
+        >
           {brands?.data?.map((brand: any) => (
             <Select.Option key={brand._id} value={brand._id}>
               {brand.name}
@@ -95,7 +133,12 @@ const ProductForm = ({
           ))}
         </Select>
       </Form.Item>
-      <Form.Item name="photoUrl" label="Photo URL" rules={[{ required: true }]}>
+      <Form.Item
+        name="photoUrl"
+        label="Photo URL"
+        rules={[{ required: true }]}
+        initialValue={data.photoUrl}
+      >
         <Input />
       </Form.Item>
       <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
@@ -113,4 +156,4 @@ const ProductForm = ({
   );
 };
 
-export default ProductForm;
+export default ProductEditForm;

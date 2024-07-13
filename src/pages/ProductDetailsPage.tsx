@@ -14,7 +14,9 @@ const ProductDetailsPage = () => {
 
   const dispatch = useAppDispatch();
 
-  const { data, isLoading, isError, error } = useGetProductByIdQuery(id);
+  const { data, isLoading, isError, error } = useGetProductByIdQuery(
+    id as string
+  );
   const product = data?.data;
 
   const handleAddToCart = () => {
@@ -47,7 +49,7 @@ const ProductDetailsPage = () => {
             <Col span={24} md={12} lg={12}>
               <h3 className="product-name">{product?.name}</h3>
               <p>
-                <span className="price">
+                <span className="price-pd">
                   Price: $
                   {discountCalculator(
                     product.price,
@@ -55,7 +57,7 @@ const ProductDetailsPage = () => {
                   )}
                 </span>
 
-                <span className="main-price">${product.price}</span>
+                <span className="main-price-detail">${product.price}</span>
               </p>
               <p
                 style={{

@@ -10,6 +10,7 @@ import ProductDetailsPage from "../pages/ProductDetailsPage";
 import CheckoutPage from "../pages/CheckoutPage";
 import ProtectedRoute from "./ProtectedRoute";
 import ProductManagement from "../pages/ProductManagement";
+import AboutUsPage from "../pages/AboutUsPage";
 
 const router = createBrowserRouter([
   {
@@ -19,7 +20,15 @@ const router = createBrowserRouter([
       { index: true, path: "", element: <HomePage /> },
       { path: "home", element: <HomePage /> },
       { path: "products", element: <ProductsPage /> },
-      { path: "product-management", element: <ProductManagement /> },
+      {
+        path: "product-management",
+        element: (
+          <ProtectedRoute>
+            <ProductManagement />
+          </ProtectedRoute>
+        )
+      },
+      { path: "about-us", element: <AboutUsPage /> },
       { path: "products/:id", element: <ProductDetailsPage /> },
       { path: "cart", element: <CartPage /> },
       {

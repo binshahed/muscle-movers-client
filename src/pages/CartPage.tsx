@@ -13,9 +13,8 @@ const orderSummeryStyle = {
 
 const CartPage = () => {
   const cart = useAppSelector((state) => state.cart);
-  const deliveryFee: number = 15;
+
   const totalPrice: number = Number.parseFloat(cart.totalPrice.toFixed(2));
-  const totalAmount: number = totalPrice + deliveryFee;
 
   return (
     <div className="cart-container container">
@@ -40,18 +39,12 @@ const CartPage = () => {
                   ${totalPrice}
                 </p>
               </Flex>
-              <Flex justify="space-between">
-                <p style={orderSummeryStyle}>Delivery Fee</p>
-                <p style={{ ...orderSummeryStyle, color: "var(--secondary)" }}>
-                  ${deliveryFee}
-                </p>
-              </Flex>
 
               <Divider />
               <Flex justify="space-between">
                 <p style={orderSummeryStyle}>Total</p>
                 <p style={{ ...orderSummeryStyle, color: "var(--secondary)" }}>
-                  ${totalAmount}
+                  ${totalPrice}
                 </p>
               </Flex>
               <Link to="/check-out">

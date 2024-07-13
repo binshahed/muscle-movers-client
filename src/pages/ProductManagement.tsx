@@ -1,62 +1,105 @@
-import { Button, Card, Radio, Table, TableColumnsType } from "antd";
+import {
+  Button,
+  Card,
+  message,
+  Popconfirm,
+  PopconfirmProps,
+  Radio,
+  Table,
+  TableColumnsType
+} from "antd";
 import { TProduct } from "../types/types.products";
-import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
-import { useGetProductsQuery } from "../store/features/products/productApi";
+import { DeleteOutlined } from "@ant-design/icons";
+import {
+  useDeleteProductMutation,
+  useGetProductsQuery
+} from "../store/features/products/productApi";
 import { useState } from "react";
 import CrateProductModal from "../components/product/CrateProductModal";
-
-const columns: TableColumnsType<TProduct> = [
-  { title: "Name", dataIndex: "name", key: "name" },
-
-  { title: "Price", dataIndex: "price", key: "price" },
-  {
-    title: "Discount (%)",
-    dataIndex: "discountPercentage",
-    key: "discountPercentage"
-  },
-  { title: "Stock Quantity", dataIndex: "stockQuantity", key: "stockQuantity" },
-  {
-    title: "Category",
-    dataIndex: "category",
-    key: "category",
-    render: (data) => data?.name
-  },
-  {
-    title: "Brand",
-    dataIndex: "brand",
-    key: "brand",
-    render: (data) => data?.name
-  },
-
-  {
-    title: "Action",
-    width: "200px",
-    dataIndex: "",
-    key: "action",
-    render: () => {
-      // console.log(data);
-      return (
-        <Radio.Group>
-          <Radio.Button>
-            <EditOutlined />
-          </Radio.Button>
-          <Radio.Button type="primary">
-            <DeleteOutlined />
-          </Radio.Button>
-        </Radio.Group>
-      );
-    }
-  }
-];
+import EditProductModal from "../components/product/EditProductModal";
 
 const ProductManagement = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const { data: products, isLoading } = useGetProductsQuery(undefined);
 
+  const [deleteProduct] = useDeleteProductMutation();
+
   const showModal = () => {
     setIsModalOpen(true);
   };
+
+  const confirm = async (id: string) => {
+    try {
+      await deleteProduct(id).unwrap();
+      message.success("Product Deleted Successfully");
+    } catch (e) {
+      message.error("Failed to Delete Product");
+    }
+  };
+
+  const cancel: PopconfirmProps["onCancel"] = (e) => {
+    console.log(e);
+    message.error("Click on No");
+  };
+
+  const columns: TableColumnsType<TProduct> = [
+    { title: "Name", dataIndex: "name", key: "name", responsive: ["sm"] },
+
+    { title: "Price", dataIndex: "price", key: "price", responsive: ["sm"] },
+    {
+      title: "Discount (%)",
+      dataIndex: "discountPercentage",
+      key: "discountPercentage",
+      responsive: ["sm"]
+    },
+    {
+      title: "Stock Quantity",
+      dataIndex: "stockQuantity",
+      key: "stockQuantity",
+      responsive: ["sm"]
+    },
+    {
+      title: "Category",
+      dataIndex: "category",
+      key: "category",
+      render: (data) => data?.name,
+      responsive: ["sm"]
+    },
+    {
+      title: "Brand",
+      dataIndex: "brand",
+      key: "brand",
+      render: (data) => data?.name,
+      responsive: ["sm"]
+    },
+
+    {
+      title: "Action",
+      width: "200px",
+      dataIndex: "",
+      key: "action",
+      render: (data) => {
+        return (
+          <Radio.Group>
+            <EditProductModal data={data} />
+            <Popconfirm
+              title="Delete this product"
+              description="Are you sure to delete this product?"
+              onConfirm={() => confirm(data?._id)}
+              onCancel={cancel}
+              okText="Yes"
+              cancelText="No"
+            >
+              <Radio.Button type="primary">
+                <DeleteOutlined />
+              </Radio.Button>
+            </Popconfirm>
+          </Radio.Group>
+        );
+      }
+    }
+  ];
 
   return (
     <div className="container">
@@ -64,6 +107,7 @@ const ProductManagement = () => {
         isModalOpen={isModalOpen}
         setIsModalOpen={setIsModalOpen}
       />
+
       <h3 style={{ padding: "40px 0" }}>Product management</h3>
 
       <Card>

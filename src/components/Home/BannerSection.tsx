@@ -1,4 +1,5 @@
 import { Button, Col, Row } from "antd";
+import { Link } from "react-router-dom";
 
 const BannerSection = () => {
   return (
@@ -11,7 +12,9 @@ const BannerSection = () => {
               Explore our premium CLUB SERIES+ cardio equipment designed to
               elevate your fitness routine.
             </p>
-            <Button>Shop Now</Button>
+            <Link to="/products">
+              <Button>Shop Now</Button>
+            </Link>
           </Col>
         </Row>
       </div>

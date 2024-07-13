@@ -1,7 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Card, Col, Flex, Row } from "antd";
 import { useAppSelector } from "../store/hooks";
 
 import CheckoutForm from "../components/checkout/CheckoutForm";
+import { useEffect } from "react";
 
 const orderSummeryStyle = {
   fontWeight: "bold",
@@ -12,6 +14,17 @@ const CheckoutPage = () => {
   const cart = useAppSelector((state) => state.cart);
 
   const totalPrice: number = Number.parseFloat(cart.totalPrice.toFixed(2));
+
+  useEffect(() => {
+    const unloadCallback = (event: any) => {
+      event.preventDefault();
+      event.returnValue = "";
+      return "";
+    };
+
+    window.addEventListener("beforeunload", unloadCallback);
+    return () => window.removeEventListener("beforeunload", unloadCallback);
+  }, []);
 
   return (
     <div className="container" style={{ padding: "50px 0" }}>
