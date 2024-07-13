@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Col, Pagination, PaginationProps, Row } from "antd";
+import { Col, Row } from "antd";
 import ProductCarousel from "../components/product/ProductCarousel";
 import "../styles/style.products.css";
 
@@ -22,10 +22,12 @@ const ProductsPage = () => {
   );
 
   const [query, setQuery] = useState<string>("");
-  const [currentPage, setCurrentPage] = useState<number>(1);
 
   // selected price state
   const [prices, setPrices] = useState<number[]>([0, 1000]);
+
+  // search query
+  const [searchTerm, setSearchTerm] = useState<string>("");
 
   // get products
   const [
@@ -33,24 +35,17 @@ const ProductsPage = () => {
     { data: products, isLoading: isLoadingProducts, isError }
   ] = useGetAllProductsMutation(undefined);
 
-  // pagination
-  const onChange: PaginationProps["onChange"] = (pageNumber) => {
-    setCurrentPage(pageNumber);
-    const limit = 4; // Set your limit here
-    const skip = (pageNumber - 1) * limit;
-    setQuery(`limit=${limit}&skip=${skip}`);
-  };
-
   // fetch products on component mount and when query changes
   useEffect(() => {
     getAllProducts({
       query: { query },
       data: {
         category: selectedCategories,
-        price: prices
+        price: prices,
+        search: searchTerm
       }
     });
-  }, [selectedCategories, prices, query]);
+  }, [selectedCategories, prices, query, searchTerm]);
 
   return (
     <div>
@@ -64,6 +59,8 @@ const ProductsPage = () => {
             setSelectedCategories={setSelectedCategories}
             query={query}
             setQuery={setQuery}
+            setSearchTerm={setSearchTerm}
+            searchTerm={searchTerm}
           />
           {isLoadingProducts ? (
             <LoadingSkeleton />
@@ -88,14 +85,6 @@ const ProductsPage = () => {
               ))}
             </Row>
           )}
-          <Pagination
-            style={{ marginTop: "30px" }}
-            align="end"
-            current={currentPage}
-            pageSize={4} // Set your page size here
-            total={products?.data?.totalProducts}
-            onChange={onChange}
-          />
         </div>
       </div>
     </div>

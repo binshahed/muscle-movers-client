@@ -1,5 +1,8 @@
 import { Button, Cascader, Col, Row, Select, Slider } from "antd";
 import { useGetCategoriesQuery } from "../../store/features/category/categoryApi";
+import Search from "antd/es/input/Search";
+import { debounce } from "../../utils/debounce";
+import { useCallback } from "react";
 
 const { SHOW_CHILD } = Cascader;
 
@@ -10,6 +13,8 @@ type TPropsValid = {
   selectedCategories: string[];
   query: string;
   setQuery: (value: string) => void;
+  setSearchTerm: (value: string) => void;
+  searchTerm: string;
 };
 const FilterProducts = ({
   prices,
@@ -17,7 +22,9 @@ const FilterProducts = ({
   setSelectedCategories,
   selectedCategories,
   query,
-  setQuery
+  setQuery,
+  setSearchTerm,
+  searchTerm
 }: TPropsValid) => {
   // fetch categories
   const { data: categories, isLoading } = useGetCategoriesQuery(undefined);
@@ -45,7 +52,9 @@ const FilterProducts = ({
   // clear filters
   const handleClear = () => {
     setSelectedCategories([]);
+    setQuery("");
     setPrices([0, 1000]);
+    setSearchTerm("");
   };
 
   const handleSortByPriceChange = (value: string) => {
@@ -56,17 +65,39 @@ const FilterProducts = ({
       setQuery(`${query}sortBy=price&order=${value}`);
     }
   };
-  console.log(query);
+  const debouncedSearch = useCallback(
+    debounce((value: string) => {
+      setSearchTerm(value);
+    }, 1000),
+    []
+  );
+
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    debouncedSearch(e.target.value);
+  };
 
   return (
     <div style={{ marginBottom: "30px" }}>
       <h2 className="product-heading">Fitness Products</h2>
       <Row gutter={20}>
         <Col span={6}>
+          <p style={{ marginBottom: "10px", fontWeight: "bold" }}>Search</p>
+          <Search
+            allowClear
+            value={searchTerm}
+            onChange={handleSearchChange}
+            size="large"
+            placeholder="input search text"
+            onSearch={debouncedSearch}
+            // style={{ width: 100 }}
+          />
+        </Col>
+        <Col span={6}>
           <p style={{ marginBottom: "10px", fontWeight: "bold" }}>
             Filter by Category
           </p>
           <Cascader
+            placeholder="Filter by Category"
             size="large"
             style={{ width: "100%" }}
             loading={isLoading}
@@ -90,14 +121,14 @@ const FilterProducts = ({
             onChangeComplete={onChangePriceRangeComplete}
           />
         </Col>
-        <Col span={6}>
+        <Col span={4}>
           <p style={{ marginBottom: "10px", fontWeight: "bold" }}>
             Sort by Price
           </p>
           <Select
             size="large"
             defaultValue="0"
-            style={{ width: 120 }}
+            style={{ width: "100%" }}
             onChange={handleSortByPriceChange}
             options={[
               { value: "0", label: "Select" },
@@ -106,7 +137,7 @@ const FilterProducts = ({
             ]}
           />
         </Col>
-        <Col span={4}>
+        <Col span={2}>
           <Button
             onClick={handleClear}
             size="large"

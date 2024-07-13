@@ -1,0 +1,25 @@
+.cart-container .cart-heading {
+    text-align: center;
+    font-size: 30px;
+    padding: 50px 0;
+    text-transform: uppercase;
+}
+
+.cart-container .card-heading {
+   color: var(--secondary);
+    font-size: 20px;
+   
+
+}
+
+.cart-container .card-price{
+    color: var(--secondary);
+    font-size: 16px;
+    font-weight: 300;
+   
+}
+
+.cart-container .card-grandTotal{
+    color: var(--primary);
+    font-weight: bold;
+}

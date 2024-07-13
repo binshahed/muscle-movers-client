@@ -2,8 +2,17 @@ import { Badge, Button, Card } from "antd";
 import { discountCalculator } from "../../utils/discountCalculator";
 import { TProduct } from "../../types/types.products";
 import "../../styles/style.productCard.css";
+import { addToCart } from "../../store/features/cart/cartSlice";
+import { useAppDispatch } from "../../store/hooks";
+import { convertProductToCartItem } from "../../utils/cartCommonFunc";
 
 const ProductCard = ({ product }: { product: TProduct }) => {
+  const dispatch = useAppDispatch();
+
+  const handleAddCart = () => {
+    const cartItem = convertProductToCartItem(product);
+    dispatch(addToCart(cartItem));
+  };
   return (
     <Card
       hoverable
@@ -31,7 +40,9 @@ const ProductCard = ({ product }: { product: TProduct }) => {
             </span>
           )}
         </p>
-        <Button size="large">Add To Cart</Button>
+        <Button size="large" onClick={handleAddCart}>
+          Add To Cart
+        </Button>
       </div>
     </Card>
   );

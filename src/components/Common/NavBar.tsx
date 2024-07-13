@@ -10,6 +10,7 @@ import "../../styles/navbar.css";
 import { Link, NavLink } from "react-router-dom";
 
 import logo from "../../assets/logo-black.png";
+import { useAppSelector } from "../../store/hooks";
 
 const menuItems = [
   {
@@ -35,14 +36,28 @@ const menuItems = [
 ];
 
 const Header = () => {
+  const cart = useAppSelector((state) => state.cart);
   return (
     <Space size={20}>
-      <Badge count={1}>
-        <Avatar
-          shape="square"
-          icon={<ShoppingCartOutlined style={{ fontSize: "30px" }} />}
-        />
-      </Badge>
+      {cart.items.length > 0 ? (
+        <Link to="/cart">
+          <Badge count={cart.items.length}>
+            <Avatar
+              shape="square"
+              icon={<ShoppingCartOutlined style={{ fontSize: "30px" }} />}
+            />
+          </Badge>
+        </Link>
+      ) : (
+        <Link to="/cart">
+          <Badge>
+            <Avatar
+              shape="square"
+              icon={<ShoppingCartOutlined style={{ fontSize: "30px" }} />}
+            />
+          </Badge>
+        </Link>
+      )}
       <Link to="/login">
         <Avatar
           shape="square"
