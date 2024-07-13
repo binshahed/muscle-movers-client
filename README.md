@@ -1,30 +1,44 @@
-# React + TypeScript + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-Currently, two official plugins are available:
+# Muscle Movers
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Introduction
 
-## Expanding the ESLint configuration
+Muscle Movers is a comprehensive e-commerce platform designed for fitness enthusiasts. It offers a seamless shopping experience for fitness equipment and accessories.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Project Description
 
-- Configure the top-level `parserOptions` property like this:
+Muscle Movers aims to provide a user-friendly online store where customers can browse, purchase, and manage fitness products effortlessly. The platform emphasizes quality, accessibility, and customer satisfaction.
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+## Features
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+- Product listings with detailed descriptions
+- User-friendly cart system with real-time updates
+- Robust product management for administrators
+- Search and filtering options for easy navigation
+- Responsive design for optimal user experience on all devices
+
+## Technology Stack
+
+- React
+- Redux
+- Node.js
+- Express
+- MongoDB
+- TypeScript
+- Ant Design
+
+## Installation Guideline
+
+
+
+### Installation Steps
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/binshahed/muscle-movers-client.git
+   cd muscle-movers
+   npm run dev
+   ```
+   
+   go http://localhost:5173/

@@ -34,7 +34,11 @@ const Footer = () => {
             <p>Email: mdbinshahed5@gmail.com</p>
           </Col>
           <Col span={24} md={8} lg={8}>
-            <img src={logo} alt="" />
+            <img
+              style={{ width: "50%", marginBottom: "20px" }}
+              src={logo}
+              alt=""
+            />
             <img style={{ width: "100%" }} src={payment} alt="" />
           </Col>
         </Row>
