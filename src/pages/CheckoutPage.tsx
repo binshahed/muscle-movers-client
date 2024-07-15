@@ -16,9 +16,9 @@ const CheckoutPage = () => {
   const totalPrice: number = Number.parseFloat(cart.totalPrice.toFixed(2));
 
   useEffect(() => {
-    const unloadCallback = (event: any) => {
+    const unloadCallback = (event: BeforeUnloadEvent) => {
       event.preventDefault();
-      event.returnValue = "";
+
       return "";
     };
 

@@ -19,7 +19,6 @@ const ImageGallery = () => {
   return (
     <div className="container">
       <h3 className="image-gallery-heading">Happy Customers</h3>
-
       <Gallery images={images} enableImageSelection={false} />
     </div>
   );

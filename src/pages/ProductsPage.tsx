@@ -16,6 +16,9 @@ const ProductsPage = () => {
   const defaultSelectedCategory = state?.categoryItem
     ? [state?.categoryItem?._id]
     : [];
+
+  // clear state when reload page
+  window.history.replaceState({}, "");
   // selected category state
   const [selectedCategories, setSelectedCategories] = useState<string[]>(
     defaultSelectedCategory

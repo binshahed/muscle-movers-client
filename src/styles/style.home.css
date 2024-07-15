@@ -62,49 +62,35 @@
   margin: 50px 0;
 }
 
-.benefits-container {
-  background-image: url("../assets/Benefits-section.jpg");
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  height: 90vh;
-  display: flex;
-  justify-content: center;
-  align-items: center; /* Center vertically */
-  background-color: var(--secondary);
-  overflow: hidden; /* Ensure content stays within the container */
-}
-
 .benefits-container .benefits-content {
-  text-align: center;
- padding: 80px 60px;
- border-radius: 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center; /* Center horizontally */
-  animation: fadeIn 2s ease-out; /* Apply the animation */
-  background: #ffffff;
-  font-family: "Bebas Neue", sans-serif;
+  padding: 80px 60px;
+  border-radius: 20px;
+  animation: fadeIn 2s ease-out;
+  transition: all .2s ease-in-out;
+}
+
+.benefits-container .benefits-content:hover{
+  transform: scale(1.1);
 }
 
 
-.benefits-container .top-title{
+.benefits-container .top-title {
   font-size: 26px;
   text-transform: uppercase;
 }
 
-.benefits-container .main-title{
-  font-size: 40px;
+.benefits-container .main-title {
+  text-align: center;
+  font-size: 25px;
   text-transform: uppercase;
-  margin-bottom: 20px;
+  margin-bottom: 40px;
 }
-.benefits-container .benefits-detail{
+.benefits-container .benefits-detail {
   font-size: 20px;
   margin-bottom: 30px;
 }
 
-.image-gallery-heading{
+.image-gallery-heading {
   text-align: center;
   font-size: 50px;
   padding: 50px 0;

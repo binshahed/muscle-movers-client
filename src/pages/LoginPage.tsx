@@ -16,7 +16,7 @@ const LoginPage = () => {
   const dispatch = useAppDispatch();
 
   const { state } = useLocation();
-  console.log(state);
+
 
   const onFinish: FormProps<TUserSignUp>["onFinish"] = async (values) => {
     try {
@@ -88,7 +88,11 @@ const LoginPage = () => {
             </Button>
           </Form.Item>
           <p>
-            New member? <Link to="/sign-up">Sign up</Link> here.
+            New member?{" "}
+            <Link to="/sign-up" style={{ color: "var(--primary)" }}>
+              Sign up
+            </Link>{" "}
+            here.
           </p>
         </Form>
       </div>

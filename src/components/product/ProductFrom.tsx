@@ -4,6 +4,7 @@ import { Button, Form, Input, InputNumber, message, Select } from "antd";
 import { useGetCategoriesQuery } from "../../store/features/category/categoryApi";
 import { useGetBrandQuery } from "../../store/features/brand/brandAPi";
 import { useCreateProductMutation } from "../../store/features/products/productApi";
+import { APIError } from "../../types/ApiError";
 
 const layout = {
   labelCol: { span: 8 },
@@ -33,8 +34,9 @@ const ProductForm = ({
     try {
       await createProduct(values).unwrap();
       message.success("Product created successfully");
+      setIsModalOpen(false);
     } catch (error) {
-      message.error("Failed to create product");
+      message.error((error as APIError).data.message);
     }
   };
 

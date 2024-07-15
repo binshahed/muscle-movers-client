@@ -2,7 +2,7 @@ import { Button, Cascader, Col, Row, Select, Slider } from "antd";
 import { useGetCategoriesQuery } from "../../store/features/category/categoryApi";
 import Search from "antd/es/input/Search";
 import { debounce } from "../../utils/debounce";
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 
 const { SHOW_CHILD } = Cascader;
 
@@ -15,19 +15,19 @@ type TPropsValid = {
   setQuery: (value: string) => void;
   setSearchTerm: (value: string) => void;
 };
+
 const FilterProducts = ({
   prices,
   setPrices,
   setSelectedCategories,
   selectedCategories,
-  query,
+
   setQuery,
   setSearchTerm
 }: TPropsValid) => {
-  // fetch categories
   const { data: categories, isLoading } = useGetCategoriesQuery(undefined);
+  const [searchValue, setSearchValue] = useState("");
 
-  // category options
   const options = categories?.data?.map(
     (category: { name: string; _id: string }) => ({
       label: category.name,
@@ -35,24 +35,22 @@ const FilterProducts = ({
     })
   );
 
-  // on change price range completed
   const onChangePriceRangeComplete = (value: number | number[]) => {
     console.log("onChangeComplete: ", value);
     setPrices(value as number[]);
   };
 
-  // on change category selected
   const onChangeSelectCategories = (value: (string | number | null)[]) => {
-    const allCategories = value.flat();
-    setSelectedCategories(allCategories as string[]);
+    const allCategories = value as string[];
+    setSelectedCategories(allCategories);
   };
 
-  // clear filters
   const handleClear = () => {
     setSelectedCategories([]);
     setQuery("");
     setPrices([0, 1000]);
     setSearchTerm("");
+    setSearchValue("");
   };
 
   const handleSortByPriceChange = (value: string) => {
@@ -60,9 +58,10 @@ const FilterProducts = ({
     if (value === "0") {
       setQuery("");
     } else {
-      setQuery(`${query}sortBy=price&order=${value}`);
+      setQuery(`sortBy=price&order=${value}`);
     }
   };
+
   const debouncedSearch = useCallback(
     debounce((value: string) => {
       setSearchTerm(value);
@@ -71,7 +70,9 @@ const FilterProducts = ({
   );
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    debouncedSearch(e.target.value);
+    const value = e.target.value;
+    setSearchValue(value);
+    debouncedSearch(value);
   };
 
   return (
@@ -82,11 +83,11 @@ const FilterProducts = ({
           <p style={{ marginBottom: "10px", fontWeight: "bold" }}>Search</p>
           <Search
             allowClear
+            value={searchValue}
             onChange={handleSearchChange}
             size="large"
             placeholder="input search text"
             onSearch={debouncedSearch}
-            // style={{ width: 100 }}
           />
         </Col>
         <Col span={12} md={6} lg={6}>
@@ -103,7 +104,7 @@ const FilterProducts = ({
             multiple
             maxTagCount="responsive"
             showCheckedStrategy={SHOW_CHILD}
-            defaultValue={selectedCategories}
+            value={selectedCategories}
           />
         </Col>
         <Col span={12} md={6} lg={6}>
@@ -113,9 +114,10 @@ const FilterProducts = ({
           <Slider
             range
             step={10}
-            defaultValue={[prices[0], prices[1]]}
+            value={prices}
             max={1000}
-            onChangeComplete={onChangePriceRangeComplete}
+            onChange={setPrices}
+            onAfterChange={onChangePriceRangeComplete}
           />
         </Col>
         <Col span={12} md={4} lg={4}>
@@ -137,8 +139,9 @@ const FilterProducts = ({
         <Col span={12} md={2} lg={2}>
           <Button
             onClick={handleClear}
+            type="primary"
             size="large"
-            style={{ marginTop: "20px" }}
+            style={{ marginTop: "25px" }}
           >
             Clear
           </Button>

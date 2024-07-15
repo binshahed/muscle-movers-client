@@ -63,7 +63,33 @@ const Testimonials = () => {
     autoplay: true,
     speed: 9000,
     autoplaySpeed: 2000,
-    cssEase: "linear"
+    cssEase: "linear",
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 3,
+          infinite: true,
+          dots: true
+        }
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 2,
+          initialSlide: 2
+        }
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1
+        }
+      }
+    ]
   };
   return (
     <div>
@@ -72,7 +98,8 @@ const Testimonials = () => {
           fontSize: "25px",
           fontWeight: "bold",
           textAlign: "center",
-          padding: "40px"
+          marginTop: "50px"
+          // paddingBottom: "20px"
         }}
       >
         What Our Customers Say

@@ -16,6 +16,7 @@ import { verifyToken } from "../utils/verifyToken";
 
 import { APIError } from "../types/ApiError";
 
+
 const SignUpPage = () => {
   const [signUp, { isLoading }] = useSignUpMutation();
   const navigate = useNavigate();
@@ -120,7 +121,11 @@ const SignUpPage = () => {
             </Button>
           </Form.Item>
           <p>
-            Already member? <Link to="/login">Login</Link> here.
+            Already member?{" "}
+            <Link to="/login" style={{ color: "var(--primary)" }}>
+              Login
+            </Link>{" "}
+            here.
           </p>
         </Form>
       </div>
