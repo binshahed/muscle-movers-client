@@ -49,6 +49,10 @@ const ProductDetailsPage = () => {
             <Col span={24} md={12} lg={12}>
               <h3 className="product-name">{product?.name}</h3>
               <p>
+                <strong>Category: </strong>
+                {product?.category?.name}
+              </p>
+              <p>
                 <span className="price-pd">
                   Price: $
                   {discountCalculator(

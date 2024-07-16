@@ -21,6 +21,13 @@ const validateMessages = {
   }
 };
 
+type TOrder = {
+  user: string;
+  products: { product: string; quantity: number }[];
+  deliveryAddress: string;
+  paymentMethod: string;
+};
+
 const CheckoutForm = ({ cart }: { cart: CartState }) => {
   const user = useAppSelector(useCurrentUser);
   const [createOrder, { isLoading }] = useCreateOrderMutation();
@@ -28,11 +35,11 @@ const CheckoutForm = ({ cart }: { cart: CartState }) => {
   const navigate = useNavigate();
 
   const onFinish = async (values: any) => {
-    const order = {
-      user: user?._id,
+    const order: TOrder = {
+      user: user?._id as string,
       products: cart.items.map((pd) => {
         return {
-          product: pd._id,
+          product: pd._id as string,
           quantity: pd.quantity
         };
       }),

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import {
   Button,
   Card,
@@ -38,10 +39,7 @@ const ProductManagement = () => {
     }
   };
 
-  const cancel: PopconfirmProps["onCancel"] = (e) => {
-    console.log(e);
-    message.error("Click on No");
-  };
+  const cancel: PopconfirmProps["onCancel"] = (_e) => {};
 
   const columns: TableColumnsType<TProduct> = [
     { title: "Name", dataIndex: "name", key: "name", responsive: ["sm"] },
