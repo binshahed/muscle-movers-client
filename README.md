@@ -1,6 +1,4 @@
-
-
-# Muscle Movers
+(https://muscle-movers-client.vercel.ap
 
 ## Introduction
 
@@ -14,7 +12,7 @@ Muscle Movers aims to provide a user-friendly online store where customers can b
 
 - Product listings with detailed descriptions
 - User-friendly cart system with real-time updates
-- Robust product management for administrators
+- Robust product management
 - Search and filtering options for easy navigation
 - Responsive design for optimal user experience on all devices
 
