@@ -1,4 +1,4 @@
-# [Muscle Movers Backend](https://muscle-movers-client.vercel.app)
+# [Muscle Movers](https://muscle-movers-client.vercel.app)
 
 ## Introduction
 
