@@ -36,9 +36,7 @@ const CartProductCard = ({ product }: { product: TCartItem }) => {
     message.success("Product deleted successfully.");
   };
 
-  const handleCancel = () => {
-    message.error("Deletion canceled.");
-  };
+  const handleCancel = () => {};
 
   return (
     <Card style={{ borderRadius: "20px", marginBottom: "20px" }}>
